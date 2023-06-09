@@ -49,7 +49,8 @@ export default function KeyField(props: KeyFieldProps) {
           </span>
 
           <span className="px-2 py-1 mt-4 rounded-lg bg-cool-gray text-base leading-5 font-semibold text-charcoal">
-            {selectedKey}
+            {selectedKey}{' '}
+            {props.typeKeys === TypeKeys.PUBLIC ? '(pública)' : '(privada)'}
           </span>
         </div>
       </label>

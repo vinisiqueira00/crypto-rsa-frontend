@@ -20,7 +20,7 @@ import FeedbackPopup from '@/components/Feedback/Toast'
 import FileField from '@/components/Field/File'
 import KeyField from '@/components/Field/Key'
 import TextareaField from '@/components/Field/Textarea'
-import KeysModal from '@/components/Modal/Keys'
+import KeysModal from '../Modal/Keys'
 
 export default function EncryptionForm() {
   const [progressRequest, setProgressRequest] = useState<ProgressRequest>()
@@ -34,6 +34,7 @@ export default function EncryptionForm() {
 
   const encryptionForm = useForm<EncryptionFormData>({
     resolver: zodResolver(encryptionFormSchema),
+    mode: 'onChange',
   })
 
   function generateFileEncoded(encryptData: EncryptData) {
@@ -79,7 +80,7 @@ export default function EncryptionForm() {
             className="flex flex-col items-start justify-start w-full gap-8"
             onSubmit={encryptionForm.handleSubmit(encryption)}
           >
-            <div className="flex flex-col items-start w-full gap-4">
+            <div className="relative flex flex-col items-start w-full gap-4 overflow-hidden">
               <FileField name="file" label="Arquivo a ser criptografado" />
 
               {selectedKey ? (
@@ -106,15 +107,19 @@ export default function EncryptionForm() {
             />
           </form>
 
-          {feedbackOpened && (
-            <FeedbackPopup
-              status={progressRequest}
-              title={feedbackTitle}
-              description={feedbackDescription}
-            />
-          )}
+          <FeedbackPopup
+            status={progressRequest}
+            title={feedbackTitle}
+            description={feedbackDescription}
+            open={feedbackOpened}
+            setOpen={setFeedbackOpened}
+          />
 
-          <KeysModal typeKeys={TypeKeys.PUBLIC} setDialogOpen={setDialogOpen} />
+          <KeysModal
+            typeKeys={TypeKeys.PUBLIC}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+          />
         </div>
       </FormProvider>
     </Dialog.Root>

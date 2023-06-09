@@ -9,6 +9,8 @@ export default function FeedbackPopup(props: FeedbackPopupProps) {
   return (
     <Toast.Provider duration={5000}>
       <Toast.Root
+        open={props.open}
+        onOpenChange={props.setOpen}
         className={`flex items-center justify-center gap-4 w-full p-4 rounded-2xl ${
           props.status === ProgressRequest.ERROR
             ? 'bg-safety-orange'
@@ -31,7 +33,7 @@ export default function FeedbackPopup(props: FeedbackPopupProps) {
           )}
         </div>
         <div className="flex flex-col items-start justify-start gap-1">
-          <Toast.Title className="text-base leading-none font-black text-antiflash-white">
+          <Toast.Title className="text-base leading-tight font-black text-antiflash-white">
             {props.title}
           </Toast.Title>
           <Toast.Description className="text-base leading-tight font-medium text-antiflash-white">
@@ -40,7 +42,7 @@ export default function FeedbackPopup(props: FeedbackPopupProps) {
         </div>
       </Toast.Root>
 
-      <Toast.Viewport className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-screen p-4 z-10" />
+      <Toast.Viewport className="absolute bottom-4 sm:top-4 left-1/2 transform -translate-x-1/2 w-screen-borderless max-w-md h-auto pointer-events-none z-10" />
     </Toast.Provider>
   )
 }

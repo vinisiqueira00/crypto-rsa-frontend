@@ -34,6 +34,7 @@ export default function DecryptionForm() {
 
   const decryptionForm = useForm<DecryptionFormData>({
     resolver: zodResolver(decryptionFormSchema),
+    mode: 'onChange',
   })
 
   function generateFileDecoded(decryptData: DecryptData) {
@@ -103,16 +104,17 @@ export default function DecryptionForm() {
             />
           </form>
 
-          {feedbackOpened && (
-            <FeedbackPopup
-              status={progressRequest}
-              title={feedbackTitle}
-              description={feedbackDescription}
-            />
-          )}
+          <FeedbackPopup
+            status={progressRequest}
+            title={feedbackTitle}
+            description={feedbackDescription}
+            open={feedbackOpened}
+            setOpen={setFeedbackOpened}
+          />
 
           <KeysModal
             typeKeys={TypeKeys.PRIVATE}
+            dialogOpen={dialogOpen}
             setDialogOpen={setDialogOpen}
           />
         </div>

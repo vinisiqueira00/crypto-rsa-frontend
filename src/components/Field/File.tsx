@@ -19,7 +19,7 @@ export default function FileField(props: FileFieldProps) {
           <input
             id={props.name}
             type="file"
-            className="peer hidden"
+            className="peer absolute opacity-0 pointer-events-none w-full"
             required
             {...register(props.name)}
           />

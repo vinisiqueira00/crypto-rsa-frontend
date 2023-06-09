@@ -3,5 +3,7 @@ export declare global {
     title: string
     description: string
     status: ProgressRequest | undefined
+    open: boolean
+    setOpen: Dispatch<SetStateAction<boolean>>
   }
 }

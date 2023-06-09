@@ -6,11 +6,14 @@ import * as RadioGroup from '@radix-ui/react-radio-group'
 import { useEffect, useState } from 'react'
 
 import { TypeKeys } from '@/types/enumerations/fields'
+import CopyButton from '../Button/Copy'
+import RemoveButton from '../Button/Remove'
+import EmptyPreview from '../Preview/Empty'
 
 export default function KeysModal(props: KeysModalProps) {
   const [keys, setKeys] = useState<GenerateKeysData[]>()
 
-  const { setSelectedKey } = useKeysContext()
+  const { selectedKey, setSelectedKey } = useKeysContext()
 
   function handleSelectKey(value: string) {
     if (value === 'manual key') {
@@ -27,7 +30,11 @@ export default function KeysModal(props: KeysModalProps) {
     const rsaKeysLocal: string = localStorage.getItem('rsa_keys') ?? '[]'
     const rsaKeysLocalParsed = JSON.parse(rsaKeysLocal) as GenerateKeysData[]
     setKeys(rsaKeysLocalParsed)
-  }, [])
+  }, [props.dialogOpen])
+
+  useEffect(() => {
+    console.log(selectedKey)
+  }, [selectedKey])
 
   return (
     <Dialog.Portal>
@@ -40,7 +47,8 @@ export default function KeysModal(props: KeysModalProps) {
           </Dialog.Title>
 
           <RadioGroup.Root
-            defaultValue="manual_key"
+            defaultValue="manual key"
+            value={!selectedKey ? 'manual key' : `generate_${selectedKey}`}
             onValueChange={handleSelectKey}
           >
             <div className="flex flex-col items-start justify-start gap-3 w-full">
@@ -59,36 +67,59 @@ export default function KeysModal(props: KeysModalProps) {
                 </span>
               </label>
 
-              {keys?.map((key) => (
-                <label
-                  key={key.keyName.toLowerCase().replaceAll(' ', '_')}
-                  htmlFor={key.keyName.toLowerCase().replaceAll(' ', '_')}
-                  className="flex flex-col gap-3 w-full p-5 rounded-2xl bg-raisin-black cursor-pointer"
-                >
-                  <div className="flex items-center gap-4">
-                    <RadioGroup.Item
-                      id={key.keyName.toLowerCase().replaceAll(' ', '_')}
-                      value={`generate_${key.keyName}`}
-                      className="peer w-4 h-4 rounded-full bg-charcoal aria-checked:bg-red-pantone aria-checked:shadow-radio"
-                    />
+              {keys?.length ? (
+                keys.map((key) => (
+                  <label
+                    key={key.keyName.toLowerCase().replaceAll(' ', '_')}
+                    htmlFor={key.keyName.toLowerCase().replaceAll(' ', '_')}
+                    className="flex flex-col gap-3 w-full p-5 rounded-2xl bg-raisin-black cursor-pointer"
+                  >
+                    <div className="flex items-center gap-4">
+                      <RadioGroup.Item
+                        id={key.keyName.toLowerCase().replaceAll(' ', '_')}
+                        value={`generate_${key.keyName}`}
+                        className="peer w-4 h-4 rounded-full bg-charcoal aria-checked:bg-red-pantone aria-checked:shadow-radio"
+                      />
 
-                    <span className="flex-1 text-base leading-none font-medium text-cool-gray peer-aria-checked:text-antiflash-white peer-aria-checked:font-bold">
-                      {key.keyName}{' '}
-                      {props.typeKeys === TypeKeys.PUBLIC
-                        ? '(pública)'
-                        : '(privada)'}
-                    </span>
-                  </div>
-                  <div className="relative flex-1 max-h-20 overflow-hidden">
-                    <p className="flex items-stretch gap-4 w-full text-base leading-tight font-medium text-cool-gray break-all">
-                      {props.typeKeys === TypeKeys.PUBLIC
-                        ? key.publicKey
-                        : key.privateKey}
-                    </p>
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-raisin-black to-transparent" />
-                  </div>
-                </label>
-              ))}
+                      <span className="flex-1 text-base leading-none font-medium text-cool-gray peer-aria-checked:text-antiflash-white peer-aria-checked:font-bold">
+                        {key.keyName}{' '}
+                        {props.typeKeys === TypeKeys.PUBLIC
+                          ? '(pública)'
+                          : '(privada)'}
+                      </span>
+
+                      <div className="flex items-center">
+                        <CopyButton
+                          isActive
+                          copyToClipboardText={
+                            props.typeKeys === TypeKeys.PUBLIC
+                              ? key.publicKey
+                              : key.privateKey
+                          }
+                        />
+
+                        <RemoveButton
+                          isActive
+                          id={key.keyName}
+                          setKeys={setKeys}
+                        />
+                      </div>
+                    </div>
+                    <div className="relative flex-1 max-h-20 overflow-hidden">
+                      <p className="flex items-stretch gap-4 w-full text-base leading-tight font-medium text-cool-gray break-all">
+                        {props.typeKeys === TypeKeys.PUBLIC
+                          ? key.publicKey
+                          : key.privateKey}
+                      </p>
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-raisin-black to-transparent" />
+                    </div>
+                  </label>
+                ))
+              ) : (
+                <div className="flex items-center justify-center w-full">
+                  <EmptyPreview message="Gere pares de chaves RSA e elas aparecerão aqui nessa listagem" />
+                </div>
+              )}
             </div>
           </RadioGroup.Root>
         </div>

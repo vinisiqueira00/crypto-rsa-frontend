@@ -3,18 +3,12 @@
 import { z } from 'zod'
 
 export const decryptionFormSchema = z.object({
-  file: z.custom((value) => {
-    if (typeof window !== 'undefined') {
-      if (!(value instanceof FileList)) {
-        throw new Error('O arquivo é obrigatório!')
-      }
-
-      if (value.length === 0 || value[0].type !== 'text/plain') {
-        throw new Error('O arquivo deve ser um arquivo TXT!')
-      }
-    }
-
-    return true
-  }),
+  file: z
+    .custom<FileList>((value) => value instanceof FileList)
+    .refine((value) => value.length > 0, 'O arquivo é obrigatório!')
+    .refine(
+      (value) => value[0]?.type === 'text/plain',
+      'O arquivo deve ser um arquivo TXT!',
+    ),
   privateKey: z.string().nonempty('A chave privada é obrigatória!'),
 })

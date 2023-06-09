@@ -13,6 +13,12 @@ export declare global {
     fileLink: HTMLAnchorElement | undefined
   }
 
+  export interface RemoveButtonProps {
+    isActive: boolean
+    id: string
+    setKeys: Dispatch<SetStateAction<GenerateKeysData[] | undefined>>
+  }
+
   export interface SendButtonProps {
     label: string
     loading: boolean

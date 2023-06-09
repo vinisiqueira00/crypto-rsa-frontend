@@ -26,6 +26,7 @@ export default function KeysGenerationForm() {
 
   const keysGenerationForm = useForm<KeysGenerationFormData>({
     resolver: zodResolver(keysGenerationFormSchema),
+    mode: 'onChange',
   })
 
   function saveOnLocalStorage(generateKeyData: GenerateKeysData) {
@@ -84,13 +85,13 @@ export default function KeysGenerationForm() {
           />
         </form>
 
-        {feedbackOpened && (
-          <FeedbackPopup
-            status={progressRequest}
-            title={feedbackTitle}
-            description={feedbackDescription}
-          />
-        )}
+        <FeedbackPopup
+          status={progressRequest}
+          title={feedbackTitle}
+          description={feedbackDescription}
+          open={feedbackOpened}
+          setOpen={setFeedbackOpened}
+        />
       </div>
     </FormProvider>
   )
