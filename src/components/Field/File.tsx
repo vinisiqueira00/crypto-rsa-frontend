@@ -20,6 +20,7 @@ export default function FileField(props: FileFieldProps) {
             id={props.name}
             type="file"
             className="peer absolute opacity-0 pointer-events-none w-full"
+            accept=".txt"
             required
             {...register(props.name)}
           />

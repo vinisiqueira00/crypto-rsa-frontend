@@ -22,7 +22,7 @@ export default function FilePreview(props: FilePreviewProps) {
         />
       </div>
 
-      <div className="pr-2">
+      <div className="pr-2 w-full">
         {downloadFileLink ? (
           <div className="flex items-stretch gap-4 w-full">
             <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-space-cadet">

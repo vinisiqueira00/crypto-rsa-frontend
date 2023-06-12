@@ -13,13 +13,10 @@ export default async function decrypt(
     formData.append('file', props.file[0])
     formData.append('privateKey', props.privateKey)
 
-    const response = await fetch(
-      'https://crypto-rsa-backend.onrender.com/decryption',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
+    const response = await fetch('http://localhost:3333/decryption', {
+      method: 'POST',
+      body: formData,
+    })
 
     const file = await response.blob()
     const contentFile = await file.text()
