@@ -1,28 +1,28 @@
-'use client'
+"use client";
 
 interface GenerateKeysProps {
-  keyName: string
+  keyName: string;
 }
 
 export default async function generateKeys(
-  props: GenerateKeysProps,
+  props: GenerateKeysProps
 ): Promise<GenerateKeysData> {
   try {
     const response = await fetch(
-      'https://crypto-rsa-backend.onrender.com/keys-generation',
+      "https://crypto-rsa-backend.vercel.app/keys-generation",
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           keyName: props.keyName,
         }),
-      },
-    )
+      }
+    );
 
-    const data = await response.json()
+    const data = await response.json();
 
-    return data
+    return data;
   } catch (error) {
-    throw new Error((error as Error).message)
+    throw new Error((error as Error).message);
   }
 }
