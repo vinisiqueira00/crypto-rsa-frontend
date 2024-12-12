@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { Key } from '@phosphor-icons/react'
-import Link from 'next/link'
+import Link from "next/link";
+import { Key } from "@phosphor-icons/react";
 
-export default function KeyButton(props: KeyButtonProps) {
+export default function KeyButton() {
   return (
     <Link
       href="/generate-keys"
@@ -14,5 +14,5 @@ export default function KeyButton(props: KeyButtonProps) {
         Gerar chaves
       </span>
     </Link>
-  )
+  );
 }

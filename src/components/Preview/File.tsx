@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { FileText } from '@phosphor-icons/react'
+import { FileText } from "@phosphor-icons/react";
 
-import { useFileContext } from '@/context/File'
+import { useFileContext } from "@/context/File";
 
-import DownloadButton from '@/components/Button/Download'
-import EmptyPreview from '@/components/Preview/Empty'
+import EmptyPreview from "@/components/Preview/Empty";
+import DownloadButton from "@/components/Button/Download";
 
 export default function FilePreview(props: FilePreviewProps) {
-  const { downloadFileLink, previewFileContent } = useFileContext()
+  const { downloadFileLink, previewFileContent } = useFileContext();
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full pt-3 pb-5 pl-5 pr-3 rounded-2xl bg-raisin-black">
+    <div className="flex flex-col items-stretch gap-4 w-full pt-3 pb-5 pl-5 pr-3 rounded-2xl bg-raisin-black">
       <div className="flex items-center justify-between w-full">
         <span className="text-base leading-none font-semibold text-cool-gray">
           {props.title}
@@ -22,7 +22,7 @@ export default function FilePreview(props: FilePreviewProps) {
         />
       </div>
 
-      <div className="pr-2">
+      <div className="flex items-center justify-center pr-2">
         {downloadFileLink ? (
           <div className="flex items-stretch gap-4 w-full">
             <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-space-cadet">
@@ -45,5 +45,5 @@ export default function FilePreview(props: FilePreviewProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

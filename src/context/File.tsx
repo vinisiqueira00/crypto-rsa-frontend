@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Dispatch,
@@ -7,24 +7,24 @@ import {
   useContext,
   useMemo,
   useState,
-} from 'react'
+} from "react";
 
 interface FileContextProps {
-  previewFileContent: string | undefined
-  setPreviewFileContent: Dispatch<SetStateAction<string | undefined>>
-  downloadFileLink: HTMLAnchorElement | undefined
-  setDownloadFileLink: Dispatch<SetStateAction<HTMLAnchorElement | undefined>>
+  previewFileContent: string | undefined;
+  setPreviewFileContent: Dispatch<SetStateAction<string | undefined>>;
+  downloadFileLink: HTMLAnchorElement | undefined;
+  setDownloadFileLink: Dispatch<SetStateAction<HTMLAnchorElement | undefined>>;
 }
 
 interface FileProviderProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-const FileContext = createContext<FileContextProps>({} as FileContextProps)
+const FileContext = createContext<FileContextProps>({} as FileContextProps);
 
 export function FileProvider({ children }: FileProviderProps) {
-  const [downloadFileLink, setDownloadFileLink] = useState<HTMLAnchorElement>()
-  const [previewFileContent, setPreviewFileContent] = useState<string>()
+  const [downloadFileLink, setDownloadFileLink] = useState<HTMLAnchorElement>();
+  const [previewFileContent, setPreviewFileContent] = useState<string>();
 
   const values = useMemo(() => {
     return {
@@ -32,12 +32,12 @@ export function FileProvider({ children }: FileProviderProps) {
       setDownloadFileLink,
       previewFileContent,
       setPreviewFileContent,
-    }
-  }, [downloadFileLink, previewFileContent])
+    };
+  }, [downloadFileLink, previewFileContent]);
 
-  return <FileContext.Provider value={values}>{children}</FileContext.Provider>
+  return <FileContext.Provider value={values}>{children}</FileContext.Provider>;
 }
 
 export function useFileContext() {
-  return useContext(FileContext)
+  return useContext(FileContext);
 }

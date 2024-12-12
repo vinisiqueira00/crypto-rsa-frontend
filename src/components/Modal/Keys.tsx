@@ -1,40 +1,34 @@
-'use client'
+import { useEffect, useState } from "react";
+import { useKeysContext } from "@/context/Keys";
+import * as Dialog from "@radix-ui/react-dialog";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 
-import { useKeysContext } from '@/context/Keys'
-import * as Dialog from '@radix-ui/react-dialog'
-import * as RadioGroup from '@radix-ui/react-radio-group'
-import { useEffect, useState } from 'react'
-
-import { TypeKeys } from '@/types/enumerations/fields'
-import CopyButton from '../Button/Copy'
-import RemoveButton from '../Button/Remove'
-import EmptyPreview from '../Preview/Empty'
+import CopyButton from "../Button/Copy";
+import RemoveButton from "../Button/Remove";
+import EmptyPreview from "../Preview/Empty";
+import { TypeKeys } from "@/types/enumerations/fields";
 
 export default function KeysModal(props: KeysModalProps) {
-  const [keys, setKeys] = useState<GenerateKeysData[]>()
+  const [keys, setKeys] = useState<GenerateKeysData[]>();
 
-  const { selectedKey, setSelectedKey } = useKeysContext()
+  const { selectedKey, setSelectedKey } = useKeysContext();
 
   function handleSelectKey(value: string) {
-    if (value === 'manual key') {
-      setSelectedKey(undefined)
+    if (value === "manual key") {
+      setSelectedKey(undefined);
     } else {
-      const keyName = value.replace(/^generate_/, '')
-      setSelectedKey(keyName)
+      const keyName = value.replace(/^generate_/, "");
+      setSelectedKey(keyName);
     }
 
-    props.setDialogOpen(false)
+    props.setDialogOpen(false);
   }
 
   useEffect(() => {
-    const rsaKeysLocal: string = localStorage.getItem('rsa_keys') ?? '[]'
-    const rsaKeysLocalParsed = JSON.parse(rsaKeysLocal) as GenerateKeysData[]
-    setKeys(rsaKeysLocalParsed)
-  }, [props.dialogOpen])
-
-  useEffect(() => {
-    console.log(selectedKey)
-  }, [selectedKey])
+    const rsaKeysLocal: string = localStorage.getItem("rsa_keys") ?? "[]";
+    const rsaKeysLocalParsed = JSON.parse(rsaKeysLocal) as GenerateKeysData[];
+    setKeys(rsaKeysLocalParsed);
+  }, [props.dialogOpen]);
 
   return (
     <Dialog.Portal>
@@ -48,7 +42,7 @@ export default function KeysModal(props: KeysModalProps) {
 
           <RadioGroup.Root
             defaultValue="manual key"
-            value={!selectedKey ? 'manual key' : `generate_${selectedKey}`}
+            value={!selectedKey ? "manual key" : `generate_${selectedKey}`}
             onValueChange={handleSelectKey}
           >
             <div className="flex flex-col items-start justify-start gap-3 w-full">
@@ -70,22 +64,22 @@ export default function KeysModal(props: KeysModalProps) {
               {keys?.length ? (
                 keys.map((key) => (
                   <label
-                    key={key.keyName.toLowerCase().replaceAll(' ', '_')}
-                    htmlFor={key.keyName.toLowerCase().replaceAll(' ', '_')}
+                    key={key.keyName.toLowerCase().replaceAll(" ", "_")}
+                    htmlFor={key.keyName.toLowerCase().replaceAll(" ", "_")}
                     className="flex flex-col gap-3 w-full p-5 rounded-2xl bg-raisin-black cursor-pointer"
                   >
                     <div className="flex items-center gap-4">
                       <RadioGroup.Item
-                        id={key.keyName.toLowerCase().replaceAll(' ', '_')}
+                        id={key.keyName.toLowerCase().replaceAll(" ", "_")}
                         value={`generate_${key.keyName}`}
                         className="peer w-4 h-4 rounded-full bg-charcoal aria-checked:bg-red-pantone aria-checked:shadow-radio"
                       />
 
                       <span className="flex-1 text-base leading-none font-medium text-cool-gray peer-aria-checked:text-antiflash-white peer-aria-checked:font-bold">
-                        {key.keyName}{' '}
+                        {key.keyName}{" "}
                         {props.typeKeys === TypeKeys.PUBLIC
-                          ? '(pública)'
-                          : '(privada)'}
+                          ? "(pública)"
+                          : "(privada)"}
                       </span>
 
                       <div className="flex items-center">
@@ -125,5 +119,5 @@ export default function KeysModal(props: KeysModalProps) {
         </div>
       </Dialog.Content>
     </Dialog.Portal>
-  )
+  );
 }

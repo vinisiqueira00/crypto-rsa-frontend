@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { FileText } from '@phosphor-icons/react'
-import { useFormContext } from 'react-hook-form'
+import { FileText } from "@phosphor-icons/react";
+import { useFormContext } from "react-hook-form";
 
 export default function FileField(props: FileFieldProps) {
-  const { register, formState, watch } = useFormContext()
+  const { register, formState, watch } = useFormContext();
 
   return (
     <div className="flex flex-col items-end justify-start gap-2 w-full">
@@ -42,5 +42,5 @@ export default function FileField(props: FileFieldProps) {
         </span>
       )}
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { CopySimple } from '@phosphor-icons/react'
+import { CopySimple } from "@phosphor-icons/react";
 
 export default function CopyButton(props: CopyButtonProps) {
   return (
@@ -8,7 +8,7 @@ export default function CopyButton(props: CopyButtonProps) {
       type="button"
       disabled={!props.isActive}
       className={`p-2 rounded-full ${
-        props.isActive ? 'text-cool-gray hover:bg-space-cadet' : 'text-charcoal'
+        props.isActive ? "text-cool-gray hover:bg-space-cadet" : "text-charcoal"
       }`}
       onClick={() =>
         props.copyToClipboardText &&
@@ -17,5 +17,5 @@ export default function CopyButton(props: CopyButtonProps) {
     >
       <CopySimple weight="bold" size="1.5rem" />
     </button>
-  )
+  );
 }

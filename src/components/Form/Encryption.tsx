@@ -1,74 +1,76 @@
-'use client'
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as Dialog from '@radix-ui/react-dialog'
-import { useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
 
-import { ProgressRequest } from '@/types/enumerations/feedbacks'
-import { TypeKeys } from '@/types/enumerations/fields'
+import { TypeKeys } from "@/types/enumerations/fields";
+import { ProgressRequest } from "@/types/enumerations/feedbacks";
 
-import { encryptionFormSchema } from '@/components/Form/schemas/encryption'
+import { encryptionFormSchema } from "@/components/Form/schemas/encryption";
 
-import encrypt from '@/api/encrypt'
+import encrypt from "@/api/encrypt";
 
-import { useFileContext } from '@/context/File'
-import { useKeysContext } from '@/context/Keys'
+import { useFileContext } from "@/context/File";
+import { useKeysContext } from "@/context/Keys";
 
-import SendButton from '@/components/Button/Send'
-import FeedbackPopup from '@/components/Feedback/Toast'
-import FileField from '@/components/Field/File'
-import KeyField from '@/components/Field/Key'
-import TextareaField from '@/components/Field/Textarea'
-import KeysModal from '../Modal/Keys'
+import KeysModal from "../Modal/Keys";
+import KeyField from "@/components/Field/Key";
+import FileField from "@/components/Field/File";
+import SendButton from "@/components/Button/Send";
+import FeedbackPopup from "@/components/Feedback/Toast";
+import TextareaField from "@/components/Field/Textarea";
 
 export default function EncryptionForm() {
-  const [progressRequest, setProgressRequest] = useState<ProgressRequest>()
-  const [feedbackTitle, setFeedbackTitle] = useState<string>('')
-  const [feedbackDescription, setFeedbackDescription] = useState<string>('')
-  const [feedbackOpened, setFeedbackOpened] = useState<boolean>(false)
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [progressRequest, setProgressRequest] = useState<ProgressRequest>();
+  const [feedbackTitle, setFeedbackTitle] = useState<string>("");
+  const [feedbackDescription, setFeedbackDescription] = useState<string>("");
+  const [feedbackOpened, setFeedbackOpened] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const { selectedKey } = useKeysContext()
-  const { setDownloadFileLink, setPreviewFileContent } = useFileContext()
+  const { selectedKey } = useKeysContext();
+  const { setDownloadFileLink, setPreviewFileContent } = useFileContext();
 
   const encryptionForm = useForm<EncryptionFormData>({
     resolver: zodResolver(encryptionFormSchema),
-    mode: 'onChange',
-  })
+    mode: "onChange",
+  });
 
   function generateFileEncoded(encryptData: EncryptData) {
-    const url = URL.createObjectURL(encryptData.file)
-    const link = document.createElement('a')
-    link.download = 'encoded.txt'
-    link.href = url
+    const url = URL.createObjectURL(encryptData.file);
+    const link = document.createElement("a");
+    link.download = "encoded.txt";
+    link.href = url;
 
-    setPreviewFileContent(encryptData.contentFile)
-    setDownloadFileLink(link)
+    setPreviewFileContent(encryptData.contentFile);
+    setDownloadFileLink(link);
   }
 
   async function encryption(data: EncryptionFormData) {
     try {
-      if (!data.file || !data.publicKey) return
+      if (!data.file || !data.publicKey) return;
 
-      setProgressRequest(ProgressRequest.LOADING)
+      setProgressRequest(ProgressRequest.LOADING);
 
       const response = await encrypt({
         file: data.file,
         publicKey: data.publicKey,
-      })
+      });
 
-      generateFileEncoded(response)
+      generateFileEncoded(response);
 
-      setProgressRequest(ProgressRequest.SUCCESS)
-    } catch (error) {
-      setProgressRequest(ProgressRequest.ERROR)
+      setProgressRequest(ProgressRequest.SUCCESS);
+    } catch (err) {
+      console.error(err);
 
-      setFeedbackTitle('Erro ao realizar a criptografia!')
+      setProgressRequest(ProgressRequest.ERROR);
+
+      setFeedbackTitle("Erro ao realizar a criptografia!");
       setFeedbackDescription(
-        'Confira o tipo do arquivo enviado, sua chave pública e tente novamente :)',
-      )
-      setFeedbackOpened(true)
+        "Confira o tipo do arquivo enviado, sua chave pública e tente novamente :)"
+      );
+      setFeedbackOpened(true);
     }
   }
 
@@ -123,5 +125,5 @@ export default function EncryptionForm() {
         </div>
       </FormProvider>
     </Dialog.Root>
-  )
+  );
 }

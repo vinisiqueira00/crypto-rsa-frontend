@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { Key } from '@phosphor-icons/react'
-import { useFormContext } from 'react-hook-form'
+import { Key } from "@phosphor-icons/react";
+import { useFormContext } from "react-hook-form";
 
 export default function TextareaField(props: TextareaFieldProps) {
-  const { register, formState } = useFormContext()
+  const { register, formState } = useFormContext();
 
   return (
     <div className="flex flex-col items-end justify-start gap-2 w-full">
@@ -35,5 +35,5 @@ export default function TextareaField(props: TextareaFieldProps) {
         </span>
       )}
     </div>
-  )
+  );
 }

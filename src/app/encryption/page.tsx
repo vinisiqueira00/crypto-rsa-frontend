@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import Link from "next/link";
 
-import KeyButton from '@/components/Button/Key'
-import EncryptionForm from '@/components/Form/Encryption'
-import FilePreview from '@/components/Preview/File'
+import KeyButton from "@/components/Button/Key";
+import EncryptionForm from "@/components/Form/Encryption";
+import FilePreview from "@/components/Preview/File";
 
 export default function Encryption() {
   return (
@@ -46,5 +46,5 @@ export default function Encryption() {
         </div>
       </main>
     </div>
-  )
+  );
 }

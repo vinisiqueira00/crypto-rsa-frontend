@@ -1,31 +1,31 @@
-'use client'
+"use client";
 
-import { Key } from '@phosphor-icons/react'
-import { useEffect } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useEffect } from "react";
+import { Key } from "@phosphor-icons/react";
+import { useFormContext } from "react-hook-form";
 
-import { TypeKeys } from '@/types/enumerations/fields'
+import { TypeKeys } from "@/types/enumerations/fields";
 
-import { useKeysContext } from '@/context/Keys'
+import { useKeysContext } from "@/context/Keys";
 
 export default function KeyField(props: KeyFieldProps) {
-  const { selectedKey } = useKeysContext()
-  const { register, formState, setValue } = useFormContext()
+  const { selectedKey } = useKeysContext();
+  const { register, formState, setValue } = useFormContext();
 
   useEffect(() => {
-    const rsaKeysLocal: string = localStorage.getItem('rsa_keys') ?? '[]'
-    const rsaKeysLocalParsed = JSON.parse(rsaKeysLocal) as GenerateKeysData[]
+    const rsaKeysLocal: string = localStorage.getItem("rsa_keys") ?? "[]";
+    const rsaKeysLocalParsed = JSON.parse(rsaKeysLocal) as GenerateKeysData[];
     const keyInfo = rsaKeysLocalParsed.filter(
-      (key) => key.keyName === selectedKey,
-    )[0]
+      (key) => key.keyName === selectedKey
+    )[0];
 
-    setValue(
-      props.name,
+    const keyValue =
       props.typeKeys === TypeKeys.PUBLIC
         ? keyInfo.publicKey
-        : keyInfo.privateKey,
-    )
-  }, [selectedKey, props.name, props.typeKeys, setValue])
+        : keyInfo.privateKey;
+
+    setValue(props.name, keyValue, { shouldValidate: true });
+  }, [selectedKey, props.name, props.typeKeys, setValue]);
 
   return (
     <div className="flex flex-col items-end justify-start gap-2 w-full">
@@ -49,8 +49,8 @@ export default function KeyField(props: KeyFieldProps) {
           </span>
 
           <span className="px-2 py-1 mt-4 rounded-lg bg-cool-gray text-base leading-5 font-semibold text-charcoal">
-            {selectedKey}{' '}
-            {props.typeKeys === TypeKeys.PUBLIC ? '(pública)' : '(privada)'}
+            {selectedKey}{" "}
+            {props.typeKeys === TypeKeys.PUBLIC ? "(pública)" : "(privada)"}
           </span>
         </div>
       </label>
@@ -61,5 +61,5 @@ export default function KeyField(props: KeyFieldProps) {
         </span>
       )}
     </div>
-  )
+  );
 }

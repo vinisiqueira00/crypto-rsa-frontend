@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { SealWarning } from '@phosphor-icons/react'
+import { SealWarning } from "@phosphor-icons/react";
 
 export default function EmptyPreview(props: EmptyPreviewProps) {
   return (
@@ -10,5 +10,5 @@ export default function EmptyPreview(props: EmptyPreviewProps) {
         {props.message}
       </p>
     </div>
-  )
+  );
 }

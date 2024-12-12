@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { useFormContext } from 'react-hook-form'
+import { useFormContext } from "react-hook-form";
 
 export default function TextField(props: TextFieldProps) {
-  const { register, formState, watch } = useFormContext()
+  const { register, formState, watch } = useFormContext();
 
   return (
     <div className="flex flex-col items-end justify-start gap-2 w-full">
@@ -38,5 +38,5 @@ export default function TextField(props: TextFieldProps) {
         </span>
       )}
     </div>
-  )
+  );
 }

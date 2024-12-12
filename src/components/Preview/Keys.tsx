@@ -1,38 +1,38 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import { useKeysContext } from '@/context/Keys'
+import { useKeysContext } from "@/context/Keys";
 
-import CopyButton from '@/components/Button/Copy'
-import DownloadButton from '@/components/Button/Download'
-import EmptyPreview from '@/components/Preview/Empty'
+import CopyButton from "@/components/Button/Copy";
+import EmptyPreview from "@/components/Preview/Empty";
+import DownloadButton from "@/components/Button/Download";
 
-export default function KeysPreview(props: KeysPreviewProps) {
-  const { publicKey, privateKey } = useKeysContext()
+export default function KeysPreview() {
+  const { publicKey, privateKey } = useKeysContext();
 
-  const [filePublicKey, setFilePublicKey] = useState<HTMLAnchorElement>()
-  const [filePrivateKey, setFilePrivateKey] = useState<HTMLAnchorElement>()
+  const [filePublicKey, setFilePublicKey] = useState<HTMLAnchorElement>();
+  const [filePrivateKey, setFilePrivateKey] = useState<HTMLAnchorElement>();
 
   function generateFile(fileData: string, fileName: string): HTMLAnchorElement {
-    const blob = new Blob([fileData], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.download = `${fileName}.txt`
-    link.href = url
+    const blob = new Blob([fileData], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = `${fileName}.txt`;
+    link.href = url;
 
-    return link
+    return link;
   }
 
   useEffect(() => {
-    const file = generateFile(publicKey ?? '', 'RSA public key')
-    setFilePublicKey(file)
-  }, [publicKey])
+    const file = generateFile(publicKey ?? "", "RSA public key");
+    setFilePublicKey(file);
+  }, [publicKey]);
 
   useEffect(() => {
-    const file = generateFile(privateKey ?? '', 'RSA private key')
-    setFilePrivateKey(file)
-  }, [privateKey])
+    const file = generateFile(privateKey ?? "", "RSA private key");
+    setFilePrivateKey(file);
+  }, [privateKey]);
 
   return (
     <div className="flex flex-col items-start gap-2 w-full">
@@ -48,7 +48,7 @@ export default function KeysPreview(props: KeysPreviewProps) {
 
           <CopyButton
             isActive={!!publicKey}
-            copyToClipboardText={publicKey ?? ''}
+            copyToClipboardText={publicKey ?? ""}
           />
           <DownloadButton isActive={!!publicKey} fileLink={filePublicKey} />
         </div>
@@ -75,7 +75,7 @@ export default function KeysPreview(props: KeysPreviewProps) {
 
           <CopyButton
             isActive={!!privateKey}
-            copyToClipboardText={privateKey ?? ''}
+            copyToClipboardText={privateKey ?? ""}
           />
           <DownloadButton isActive={!!privateKey} fileLink={filePrivateKey} />
         </div>
@@ -94,5 +94,5 @@ export default function KeysPreview(props: KeysPreviewProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

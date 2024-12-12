@@ -1,6 +1,6 @@
-import BackButton from '@/components/Button/Back'
-import KeysGenerationForm from '@/components/Form/KeysGeneration'
-import KeysPreview from '@/components/Preview/Keys'
+import BackButton from "@/components/Button/Back";
+import KeysGenerationForm from "@/components/Form/KeysGeneration";
+import KeysPreview from "@/components/Preview/Keys";
 
 export default function Encryption() {
   return (
@@ -30,5 +30,5 @@ export default function Encryption() {
         <KeysPreview />
       </main>
     </div>
-  )
+  );
 }

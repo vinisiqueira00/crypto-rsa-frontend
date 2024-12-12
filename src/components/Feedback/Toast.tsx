@@ -1,9 +1,7 @@
-'use client'
+import * as Toast from "@radix-ui/react-toast";
+import { SealCheck, Warning } from "@phosphor-icons/react";
 
-import { SealCheck, Warning } from '@phosphor-icons/react'
-import * as Toast from '@radix-ui/react-toast'
-
-import { ProgressRequest } from '@/types/enumerations/feedbacks'
+import { ProgressRequest } from "@/types/enumerations/feedbacks";
 
 export default function FeedbackPopup(props: FeedbackPopupProps) {
   return (
@@ -13,8 +11,8 @@ export default function FeedbackPopup(props: FeedbackPopupProps) {
         onOpenChange={props.setOpen}
         className={`flex items-center justify-center gap-4 w-full p-4 rounded-2xl ${
           props.status === ProgressRequest.ERROR
-            ? 'bg-safety-orange'
-            : 'bg-dark-pastel-green'
+            ? "bg-safety-orange"
+            : "bg-dark-pastel-green"
         }`}
       >
         <div className="flex items-center justify-center">
@@ -44,5 +42,5 @@ export default function FeedbackPopup(props: FeedbackPopupProps) {
 
       <Toast.Viewport className="absolute bottom-4 sm:top-4 left-1/2 transform -translate-x-1/2 w-screen-borderless max-w-md h-auto pointer-events-none z-10" />
     </Toast.Provider>
-  )
+  );
 }

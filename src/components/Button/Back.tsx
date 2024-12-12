@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { ArrowLeft } from '@phosphor-icons/react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "@phosphor-icons/react";
 
-export default function BackButton(props: BackButtonProps) {
-  const { back } = useRouter()
+export default function BackButton() {
+  const { back } = useRouter();
 
   return (
     <button
@@ -13,5 +13,5 @@ export default function BackButton(props: BackButtonProps) {
     >
       <ArrowLeft weight="bold" size="1.5rem" />
     </button>
-  )
+  );
 }

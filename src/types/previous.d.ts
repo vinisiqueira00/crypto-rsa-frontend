@@ -1,12 +1,10 @@
 export declare global {
   export interface EmptyPreviewProps {
-    message: string
+    message: string;
   }
 
   export interface FilePreviewProps {
-    title: string
-    emptyMessage: string
+    title: string;
+    emptyMessage: string;
   }
-
-  export interface KeysPreviewProps {}
 }
